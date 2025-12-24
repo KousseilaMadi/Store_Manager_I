@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account - Store Manager</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="account.css">
+</head>
+<body>
+    
+    <!-- Navigation Bars -->
+    <div class="nav-bar" id="user-navbar" style="display: flex;">
+        <ul>
+            <li class="nav-bar-item"><a href="register.html">Register</a></li>
+            <li class="nav-bar-item active"><a href="account.html">Account</a></li>
+        </ul>
+        <button class="close-app-btn" onclick="closeApp()">
+            <a>✕</a>
+        </button>
+    </div>
+    
+    <div class="nav-bar" id="admin-navbar" style="display: none;">
+        <ul>
+            <li class="nav-bar-item"><a href="register.html">Register</a></li>
+            <li class="nav-bar-item"><a href="stock.html">Stock</a></li>
+            <li class="nav-bar-item"><a href="sales.html">Sales</a></li>
+            <li class="nav-bar-item active"><a href="account.html">Account</a></li>
+        </ul>
+        <button class="close-app-btn" onclick="closeApp()">
+            <a>✕</a>
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="account-container">
+        
+        <!-- User Info Section -->
+        <div class="account-section">
+            <div class="section-header" id="user-info-header" onclick="toggleSection('user-info', 'user-info-header')">
+                <h2>Account Information</h2>
+                <span class="dropdown-arrow">▼</span>
+            </div>
+            <div class="section-content" id="user-info">
+                <div class="info-display">
+                    <div class="info-row">
+                        <span class="info-label">Username:</span>
+                        <span class="info-value" id="current-username">Loading...</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Role:</span>
+                        <span class="info-value" id="current-role">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Change Password Section -->
+        <div class="account-section">
+            <div class="section-header collapsed" id="change-password-header" onclick="toggleSection('change-password', 'change-password-header')">
+                <h2>Change Password</h2>
+                <span class="dropdown-arrow">▼</span>
+            </div>
+            <div class="section-content collapsed" id="change-password">
+                <form id="change-password-form" onsubmit="openConfirmPasswordModal(event); return false;">
+                    <div class="form-group">
+                        <label class="info-label">Current Password:</label>
+                        <input type="password" class="info-value" id="current-password" name="current_password" placeholder="Enter current password" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="info-label">New Password:</label>
+                        <input type="password" class="info-value" id="new-password" name="new_password" placeholder="Enter new password" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="info-label">Confirm New Password:</label>
+                        <input type="password" class="info-value" id="confirm-password" name="confirm_new_password" placeholder="Confirm new password" required>
+                    </div>
+                    <button type="submit" class="primary-btn">Update Password</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Admin Only: User Management -->
+        <div class="account-section" id="admin-section">
+            <div class="section-header collapsed" id="user-management-header" onclick="toggleSection('user-management', 'user-management-header')">
+                <h2>User Management</h2>
+                <span class="dropdown-arrow">▼</span>
+            </div>
+            <div class="section-content collapsed" id="user-management">
+                
+                <!-- Add User Subsection -->
+                <div class="subsection">
+                    <div class="subsection-header collapsed" id="add-user-header" onclick="toggleSubsection('add-user', 'add-user-header')">
+                        <h3>Add New User</h3>
+                        <span class="dropdown-arrow">▼</span>
+                    </div>
+                <div class="subsection-content collapsed" id="add-user">
+                    <form id="add-user-form" onsubmit="openAddUserConfirmModal(event); return false;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="info-label">username:</label>
+                                <input type="text" required class="info-value" id="new-username" name="username" placeholder="username" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="info-label">password:</label>
+                                <input type="password" class="info-value" id="new-user-password" name="password" placeholder="password" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="info-label">confirm Password:</label>
+                                <input type="password" class="info-value" id="new-user-confirm-password" name="confirm-password" placeholder="confirm password" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="info-label">Role:</label>
+                                <select id="new-user-role" class="info-value" name="role">
+                                    <option value="CASHIER">Cashier</option>
+                                    <option value="ADMIN">Admin</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="primary-btn">Add User</button>
+                    </form>
+                </div>
+                </div>
+
+                <!-- User List Subsection -->
+                <div class="subsection">
+                    <div class="subsection-header collapsed" id="user-list-header" onclick="toggleSubsection('user-list', 'user-list-header')">
+                        <h3>Existing Users</h3>
+                        <span class="dropdown-arrow">▼</span>
+                    </div>
+                    <div class="subsection-content collapsed" id="user-list">
+                        <div class="users-container">
+                            <div class="users-list" id="users-list">
+                                <!-- Dynamically populated -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- Logout Section -->
+        <div class="account-section">
+            <button id="logout-btn" class="danger-btn" onclick="openLogoutConfirmModal()">Logout</button>
+        </div>
+        
+    </div>
+    <!-- MODALS -->
+
+    <!-- 1. Confirm Password Change Modal -->
+    <div id="confirm-password-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Confirm Password Update</h2>
+                <button class="close-modal" onclick="closeConfirmPasswordModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to update your password?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn" onclick="closeConfirmPasswordModal()">Cancel</button>
+                <button class="primary-btn" onclick="performPasswordChange()">Confirm Change</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Logout Confirmation Modal -->
+    <div id="logout-confirm-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Confirm Logout</h2>
+                <button class="close-modal" onclick="closeLogoutConfirmModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to log out of your account?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-logout" class="secondary-btn" onclick="closeLogoutConfirmModal()">Cancel</button>
+                <button id="confirm-logout" class="danger-btn" onclick="performLogout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. User Role Change Modal -->
+    <div id="role-change-modal" class="modal" style="display: none;" data-username="">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="role-change-title">Change Role for User: <strong id="user-to-role-change-name">[Username Placeholder]</strong></h2>
+                <button class="close-modal" onclick="closeRoleChangeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="role-select">New Role:</label>
+                    <select id="role-select" class="info-value">
+                        <option value="CASHIER">Cashier</option>
+                        <option value="ADMIN">Admin</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn" onclick="closeRoleChangeModal()">Cancel</button>
+                <button class="primary-btn" onclick="applyRoleChange()">Save Role</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. Remove User Confirmation Modal (NEW) -->
+    <div id="remove-user-confirm-modal" class="modal" data-username="" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Confirm User Deletion</h2>
+                <button class="close-modal" onclick="closeRemoveUserConfirmModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to permanently delete the user: <strong id="user-to-delete-name">[Username Placeholder]</strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-delete" class="secondary-btn" onclick="closeRemoveUserConfirmModal()">Cancel</button>
+                <button id="confirm-delete" class="danger-btn" onclick="performUserDeletion()">Delete User</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. Add New User Confirmation Modal (NEW) -->
+    <div id="add-user-confirm-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Confirm New User Details</h2>
+                <button class="close-modal" onclick="closeAddUserConfirmModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <p>Please review the details before adding the user:</p>
+                <div class="form-group" style="border: 1px solid var(--secondary); padding: 15px; border-radius: 6px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Username:</label>
+                    <span id="confirm-new-username" style="font-size: 130%;">[Username]</span>
+                    <br>
+                    <label style="display: block; margin-top: 10px; margin-bottom: 5px; font-weight: bold;">Role:</label>
+                    <span id="confirm-new-role" style="font-size: 130%;">[Role]</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-add" class="secondary-btn" onclick="closeAddUserConfirmModal()">Cancel</button>
+                <button id="confirm-add" class="primary-btn" onclick="performAddUser()">Add User</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generic Notification/Info Modal -->
+     <div id="info-notification-modal" class="modal" style="display: none;">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h2 id="info-modal-title">Notification</h2>
+                 <button class="close-modal" onclick="closeNotificationModal()">×</button>
+             </div>
+             <div class="modal-body">
+                 <p id="info-modal-message">This is a generic information message.</p>
+             </div>
+             <div class="modal-footer">
+                 <button id="ok-btn" class="primary-btn" onclick="closeNotificationModal()">OK</button>
+             </div>
+         </div>
+     </div>
+
+    <script src="base.js"></script>
+    <script src="account.js"></script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+/* Use same base styles */
+
+.sales-container {
+    display: flex;
+    background-color: var(--bg);
+    width: 87%;
+    height: 99vh;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    margin: .25rem 0.125rem .25rem .25rem;
+    border-radius: 10px;
+    flex-direction: column;
+    padding: 1%;
+}
+
+.sales-section {
+    margin-bottom: 2%;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2%;
+}
+
+.stat-card {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.stat-label {
+    font-size: 110%;
+    color: var(--secondary-pressed);
+    margin-bottom: 10px;
+}
+
+.stat-value {
+    font-size: 200%;
+    font-weight: 500;
+    color: var(--primary);
+}
+
+/* Sales List */
+.sales-list {
+    margin-top: 2%;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.sale-card {
+    background-color: var(--white);
+    border-radius: 10px;
+    margin-bottom: 1%;
+    overflow: hidden;
+}
+
+.sale-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    cursor: pointer;
+    background-color: var(--white);
+}
+
+.sale-header:hover {
+    background-color: var(--table-row-2);
+}
+
+.sale-info {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.sale-id {
+    font-size: 120%;
+    font-weight: 400;
+    color: var(--tab-bg);
+}
+
+.sale-date {
+    font-size: 100%;
+    color: var(--secondary-pressed);
+}
+
+.sale-total {
+    font-size: 140%;
+    font-weight: 500;
+    color: var(--primary);
+}
+
+/* Sale Details */
+.sale-details {
+    max-height: 500px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background-color: var(--table-row-1);
+    padding: 15px 20px;
+}
+
+.sale-details.collapsed {
+    max-height: 0;
+    padding: 0 20px;
+}
+
+.sale-item {
+    display: grid;
+    grid-template-columns: 4fr 2fr 2fr 2fr 1fr 1fr;
+    padding: 10px 0;
+    align-items: center;
+    border-bottom: 1px solid var(--secondary);
+    font-size: 130%;
+    font-weight: 200;
+    color: var(--tab-bg);
+}
+
+.sale-item:last-child {
+    border-bottom: none;
+    margin-bottom: 12px;
+}
+
+.sale-item span:first-child {
+    font-weight: 400;
+}
+
+.quantity-selector-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+}
+
+.quantity-selector-group input[type="number"] {
+    width: 50%;
+    text-align: center;
+    padding: 8px;
+    border: 1px solid var(--secondary);
+    border-radius: 4px;
+    font-size: 125%;
+    color: var(--tab-bg);
+}

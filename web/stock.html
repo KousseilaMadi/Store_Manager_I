@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock - Store Manager</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="stock.css">
+</head>
+<body>
+    
+    <!-- Navigation Bar -->
+    <div class="nav-bar" id="admin-navbar" style="display: flex;">
+        <ul>
+            <li class="nav-bar-item"><a href="register.html">Register</a></li>
+            <li class="nav-bar-item active"><a href="stock.html">Stock</a></li>
+            <li class="nav-bar-item"><a href="sales.html">Sales</a></li>
+            <li class="nav-bar-item"><a href="account.html">Account</a></li>
+        </ul>
+        
+        <button class="close-app-btn" onclick="closeApp()">
+            <a>✕</a>
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="stock-container">
+        
+        <!-- Add Product Section -->
+        <div class="stock-section">
+            <div class="section-header" id="add-product-header" onclick="toggleSection('add-product', 'add-product-header')">
+                <h2>Add Product</h2>
+                <span class="dropdown-arrow">▼</span>
+            </div>
+            <div class="section-content" id="add-product">
+                <form id="add-product-form" onsubmit="addProduct(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Barcode:</label>
+                            <input type="text" id="product-barcode" name="barcode" placeholder="e.g. 123456789" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Product Name:</label>
+                            <input type="text" id="product-name" name="product_name" placeholder="e.g. Coca Cola" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Price:</label>
+                            <input type="number" id="product-price" name="price" placeholder="0.00" step="0.01" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Stock Quantity:</label>
+                            <input type="number" id="product-stock" name="stock_quantity" placeholder="0" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Cost Price (Optional):</label>
+                            <input type="number" id="product-cost" name="cost_price" placeholder="0.00" step="0.01" min="0" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="primary-btn">Add Product</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- View Products Section -->
+        <div class="stock-section">
+            <div class="section-header" id="view-products-header" onclick="toggleSection('view-products', 'view-products-header')">
+                <h2>View Products</h2>
+                <span class="dropdown-arrow">▼</span>
+            </div>
+            <div class="section-content" id="view-products">
+                
+                <!-- Filters -->
+                <div class="filters-container">
+                    <div class="form-row">
+
+                        <div class="form-group">
+                            <label>Search:</label>
+                            <input type="text" id="search-product-name" placeholder="Search by name" oninput="view_products()">
+                        </div>
+                        <div class="form-group">
+                            <label>Search:</label>
+                            <input type="text" id="search-product-barcode" placeholder="Search by barcode" oninput="view_products()">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>From Date:</label>
+                            <input type="date" id="filter-start-date" onchange="view_products()">
+                        </div>
+                        <div class="form-group">
+                            <label>To Date:</label>
+                            <input type="date" id="filter-end-date" onchange="view_products()">
+                        </div>
+                        <div class="action-group">
+                            <button class="primary-btn" onclick="clearFilters()">Clear Filters</button>
+                            <button class="primary-btn" onclick="view_products()">See Products</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products List -->
+                <div class="products-list" id="products-list">
+                    <!-- Dynamically populated -->
+                    <div id="loader-indicator" class="loader"></div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <!-- MODALS -->
+
+    <!-- 1. Successfully Adding Product Modal -->
+    <div id="add-product-success-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Success!</h2>
+                <button class="close-modal" onclick="closeAddProductSuccessModal()">×</button>
+            </div>
+            <div class="modal-body" style="font-size: 120%;">
+                <p id="add-product-message">Product <strong id="success-name">'[Product Name]'</strong> has been successfully added to stock.</p>
+                <br/>
+                <div class="product-details-summary">
+                    <p>Barcode:<strong> <span id="success-barcode"></span> </strong></p>
+                    <p>Price:<strong> <span id="success-price"></span> </strong></p>
+                    <p>Stock Added:<strong> <span id="success-quantity"></span> </strong></p>
+                    <p>Cost Price:<strong> <span id="success-cost"></span> </strong></p>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button id="success-ok-btn" class="primary-btn"  onclick="closeAddProductSuccessModal()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Confirm Deleting Product Modal -->
+    <div id="delete-product-confirm-modal" class="modal" data-product-id="" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Confirm Deletion</h2>
+                <button class="close-modal" onclick="closeDeleteProductConfirmModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to permanently delete the product: <strong id="product-to-delete-name">[Product Name Placeholder]</strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn" onclick="closeDeleteProductConfirmModal()">Cancel</button>
+                <button id="delete-btn" class="danger-btn" onclick="performProductDeletion()">Delete Product</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Edit Product Modal -->
+    <div id="edit-modal" class="modal" style="display: none;" data-product-id="">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Product</h2>
+                <button class="close-modal" onclick="closeEditModal()">×</button>
+            </div>
+            
+            <form id="edit-product-form" onsubmit="saveProductEdit(event)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Barcode:</label>
+                        <input type="text" id="edit-barcode" name="barcode" placeholder="e.g. 123456789" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Product Name:</label>
+                        <input type="text" id="edit-name" name="product_name" placeholder="e.g. Coca Cola" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Price:</label>
+                        <input type="number" id="edit-price" name="price" placeholder="0.00" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Stock:</label>
+                        <input type="number" id="edit-stock" name="stock_quantity" min="0" placeholder="0.00" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cost Price:</label>
+                        <input type="number" id="edit-cost" name="cost_price" min="0" placeholder="0.00" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="secondary-btn" onclick="closeEditModal()">Cancel</button>
+                    <button type="submit" class="primary-btn">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Generic Notification/Info Modal -->
+    <div id="info-notification-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="info-modal-title">Notification</h2>
+                <button class="close-modal" onclick="closeNotificationModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <p id="info-modal-message">This is a generic information message.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="ok-btn" class="primary-btn" onclick="closeNotificationModal()">OK</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="base.js"></script>
+    <script src="stock.js"></script>
+</body>
+</html>

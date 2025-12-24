@@ -1,0 +1,54 @@
+.account-container{
+    display: flex;
+    background-color: var(--bg);
+    width: 87%;
+    height: 99vh;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    margin: .25rem 0.125rem .25rem .25rem ;
+    border-radius: 10px;
+    flex-direction: column;
+    padding: 1%;
+}
+.info-row{
+    padding: 1% 0;
+}
+.form-group{
+    margin-bottom: 10px;
+}
+
+.user{
+    height: 65px;
+    background-color: var(--white);
+    color: var(--tab-bg);
+    font-size: 135%;
+    font-weight: 400;
+    padding: 8px 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1%;
+    border-radius: 10px;
+}
+.role{
+    color: var(--semi-transparent);
+}
+/* Section Header */
+.user .primary-btn{
+    font-size: 100%;
+}
+
+.info-label{
+    font-size: 125%;
+    color: var(--bg);
+}
+.info-value{
+    font-size: 125%;
+    color: var(--white);
+
+}
+
+#logout-btn{
+    font-size: 160%;
+}

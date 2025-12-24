@@ -1,0 +1,66 @@
+/* Use same base styles from account.css */
+
+.stock-container {
+    display: flex;
+    background-color: var(--bg);
+    width: 87%;
+    height: 99vh;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    margin: .25rem 0.125rem .25rem .25rem;
+    border-radius: 10px;
+    flex-direction: column;
+    padding: 1%;
+}
+
+.stock-section {
+    margin-bottom: 2%;
+}
+
+
+/* Products List */
+.products-list {
+    margin-top: 2%;
+    max-height: 900px;
+    overflow-y: auto;
+}
+
+.product-card {
+    background-color: var(--white);
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin-bottom: 1%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-info {
+    flex: 1;
+}
+
+.product-name {
+    font-size: 130%;
+    font-weight: 400;
+    color: var(--tab-bg);
+    margin-bottom: 8px;
+}
+
+.product-details {
+    display: flex;
+    gap: 3%;
+    font-size: 100%;
+    color: var(--secondary-pressed);
+}
+
+.product-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.filters-container {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 2%;
+}

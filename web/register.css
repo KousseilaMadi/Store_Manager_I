@@ -1,0 +1,338 @@
+.register-container {
+    background-color: var(--bg);
+    margin:  .25rem .25rem .25rem 0.125rem;
+    width: 87%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    padding: 1%;
+    overflow-y: scroll;
+    scrollbar-width: none;
+
+}
+.tabs-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: end;
+    justify-content: start;
+}
+.register-tab {
+    width: 14%;
+    min-width: 150px;
+    max-width: 160px;
+    height: 100%;
+    background-color: var(--secondary);
+    color: var(--white);
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px 35px 0 0;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px;
+    margin-right: 3px;
+}
+
+.register-tab:hover {
+    background-color: var(--secondary-hover);
+}
+.register-tab:active {
+    background-color: var(--secondary-pressed);
+}
+.active {
+    background-color: var(--primary-pressed);
+}
+.active:hover{
+    
+    background-color: var(--primary-pressed);
+}
+.tab-label {
+    font-size: 120%;
+}
+.close-tab-btn {
+    display: flex;
+    position: relative;
+    border: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100px;
+    width: 18px;
+    font-size: 115%;
+    font-weight: bold;
+    background-color: var(--white);
+    color: var(--secondary);
+    height: 18px;
+}
+.close-tab-btn:hover{
+    background-color: var(--secondary);
+    color: var(--white);
+    border: var(--white) 2px solid ;
+}
+.close-tab-btn:active{
+    background-color: var(--secondary-pressed);
+    color: var(--primary-pressed);
+}
+.btn-active{
+    color: var(--primary);
+}
+.btn-active:hover{
+    background-color: var(--primary);
+}
+.add-tab-btn {
+    width: 34px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border-radius: 14px 14px 0 0;
+    height: 36px;
+    border: none;
+    font-size: 140%;
+    background-color: var(--secondary);
+    color: var(--white);
+}
+.add-tab-btn:hover{
+    background-color: var(--secondary-hover);
+}
+.add-tab-btn:active{
+    background-color: var(--secondary-pressed);
+}
+
+.register-content {
+    background-color: var(--tab-bg);
+    flex: 1;
+    display: flex;
+    border-radius: 0 10px 10px 10px ;
+    flex-direction: column;
+    padding: 1%;
+}
+
+.scan-area{
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+}
+.scan-input-group{
+    display: flex;
+    flex-direction: row;
+    gap: 2%;
+    width: 40%;
+
+}
+#scan-input{
+
+    border-radius: 10px;
+    height: 45px;
+    border: none;
+    outline: none;
+    padding: 1%;
+    font-size: 150%;
+    flex: 1;
+    text-decoration: none;
+}
+#scan-input:focus{
+    border: 2px solid var(--primary);
+}
+.quick-actions{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    gap: 2%;
+    width: 40%;
+
+}
+
+.cart-items-container {
+    margin: 1% 0;
+    display: flex;
+    overflow: hidden;
+    font-size: 160%;
+    height: 60vh;
+}
+
+.cart-items-table {
+    display: flex;
+    background-color: var(--white);
+    flex-direction: column;
+    width: 100%;
+    border-radius: 10px;
+    height: 100%;
+}
+
+.cart-items-head {
+    display: grid;
+    position: sticky;
+    top: 0;
+    color: var(--white);
+    height: 40px;
+    align-items: center;
+    gap: 2px;
+    grid-template-columns: 3fr 2fr 1fr 1fr 1fr ;
+}
+
+
+.cart-items-body {
+    display: flex;
+    flex-direction: column;
+    margin-top: 22px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    gap: 2px;
+}
+
+
+.cart-row {
+    display: grid;
+    background-color: var(--white);
+    grid-template-columns: 3fr 2fr 1fr 1fr 1fr ;
+    gap:2px;
+}
+.cart-table-cell{
+    text-align: center;
+    align-items: center;
+    padding: 10px;
+    font-size: 90%;
+}
+.actions-cell{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.action-button{
+    border: none;
+    border-radius: 6px;
+    background-color: #00000000;
+}
+.action-button:hover{
+    background-color: var(--primary-hover);
+}
+.action-button:active{
+    background-color: var(--primary-pressed);
+}
+.head{
+    background-color: var(--primary);
+}
+
+.row_1{
+    background-color: var(--table-row-1);
+}
+
+.row_2{
+    background-color: var(--table-row-2);
+}
+
+
+.total-display{
+    width: 40%;
+    font-size: 250%;
+    color: var(--white);
+    margin-top: auto;
+    margin-left: auto;
+    display: flex;
+    margin-bottom: 4vh;
+    flex-direction: row;
+    justify-content: end;
+}
+.total-label{
+    padding: 2% 6%;
+    font-weight: 400;
+}
+.total-amount{
+    padding: 2% 10%;
+    background-color: var(--white);
+    color: var(--primary);
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.action-buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 1%;
+    width: 60%;
+    margin-left: auto;
+    justify-content: end;
+}
+
+/* Search Container */
+.search-results-container {
+    margin-top: 15px;
+    border: 2px solid var(--secondary);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+/* Search Header */
+.search-results-head {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    background-color: var(--primary);
+    color: var(--white);
+    padding: 12px;
+    font-size: 120%;
+    font-weight: 600;
+}
+
+/* Search Body */
+.search-results-body {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+/* Search Result Row */
+.search-result-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: 12px;
+    border-bottom: 1px solid var(--secondary);
+    cursor: pointer;
+    font-size: 120%;
+    color: var(--tab-bg);
+}
+
+.search-result-row:hover {
+    background-color: var(--secondary-hover);
+    color: var(--white);
+}
+
+.search-result-row:last-child {
+    border-bottom: none;
+}
+
+/* Search Input */
+#search-modal input[type="text"] {
+    margin-bottom: 0;
+}
+/* Search input specific styling */
+#search-modal .form-group {
+    margin-bottom: 0;
+}
+
+#search-modal input[type="text"] {
+    margin-bottom: 0;
+}
+
+/* Quantity Modal */
+/* Quantity modal uses existing styles, just need input centering */
+#quantity-modal .modal-content {
+    max-width: 400px;
+}
+
+#quantity-modal .modal-body {
+    padding: 30px 20px;
+}
+
+#quantity-modal input[type="number"] {
+    text-align: center;
+    font-size: 180%;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+#quantity-modal .form-group label {
+    text-align: center;
+    font-size: 140%;
+}

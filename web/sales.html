@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales - Store Manager</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="sales.css">
+</head>
+<body>
+    
+    <!-- Navigation Bar -->
+    <div class="nav-bar" id="admin-navbar" style="display: flex;">
+        <ul>
+            <li class="nav-bar-item"><a href="register.html">Register</a></li>
+            <li class="nav-bar-item"><a href="stock.html">Stock</a></li>
+            <li class="nav-bar-item active"><a href="sales.html">Sales</a></li>
+            <li class="nav-bar-item"><a href="account.html">Account</a></li>
+        </ul>
+        <button class="close-app-btn" onclick="closeApp()">
+            <a>✕</a>
+        </button>
+    </div>
+
+
+    <!-- Main Content -->
+    <div class="sales-container">
+        
+        <!-- Sales Statistics Section -->
+        <div class="sales-section" style="display: block;">
+            <div class="section-header" id="stats-grid-header" onclick="toggleSection('sales-stats', 'stats-grid-header')">
+                <h2>Sales Statistics</h2>
+                <span class="dropdown-arrow">▼</span>
+            </div>
+            <div class="section-content" id="sales-stats">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Revenue</div>
+                        <div class="stat-value" id="total-revenue">0.00 DZD</div>
+                    </div>
+                    <div class="stat-card" id="profit-card">
+                        <div class="stat-label">Total Profit</div>
+                        <div class="stat-value" id="total-profit">0.00 DZD</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Total Sales</div>
+                        <div class="stat-value" id="total-sales">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Sales Section -->
+        <div class="sales-section" style="display: block;">
+            <div class="section-header" id="filters-container-header" onclick="toggleSection('view-sales', 'filters-container-header')">
+                <h2>Filter Sales</h2>
+                <span class="dropdown-arrow">▼</span>
+            </div>
+            <div class="section-content" id="view-sales">
+                
+                <!-- Filters -->
+                <div class="filters-container" id="sales-filters">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>From :</label>
+                            <input type="date" id="sales-start-date" oninput="fetch_sales()">
+                        </div>
+                        <div class="form-group">
+                            <label>To :</label>
+                            <input type="date" id="sales-end-date" oninput="fetch_sales()">
+                        </div>
+                        <div class="action-group">
+                            <button class="primary-btn" onclick="clearSalesFilters()">Clear Filters</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sales List -->
+                <div class="sales-list" id="sales-list">
+                    <!-- Dynamically populated -->
+                    <div id="loader-indicator" class="loader"></div>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- View Refunds Section -->
+        <div class="sales-section" style="display: block;">
+            <div class="section-header" id="refunds-container-header" onclick="toggleSection('view-refunds', 'refunds-container-header')">
+                <h2>Refunds</h2>
+                <span class="dropdown-arrow">▼</span>
+            </div>
+            <div class="section-content" id="view-refunds">
+                
+                <!-- Sales List -->
+                <div class="sales-list" id="refunds-list">
+                    <!-- Dynamically populated -->
+                    <div id="loader-indicator" class="loader"></div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+
+    <!-- MODALS -->
+
+    <div id="refund-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Confirm Item Refund</h2>
+                <button class="close-modal" onclick="closeRefundModal()">×</button>
+            </div>
+
+            <!-- WRAPPED THE CONTENT IN A FORM -->
+            <form id="refund-process-form" data-item-id="" onsubmit="performRefund(event); return false;">
+                <div class="modal-body">
+                    <p style="font-size: 110%;">Processing refund for sale: #<strong id="refund-modal-sale-id">[Sale ID]</strong></p>
+                    <p style="font-size: 110%;">Product: <strong id="refund-modal-product-name">[Product Name]</strong></p>
+
+                    <div class="form-group">
+                        <label for="refund-quantity-input">Quantity to Refund:</label>
+                        <input type="number" id="refund-quantity-input" name="refund_qty" value="1" min="1" oninput="QtyCheck()">
+                        <p style="font-size: 100%; margin-top: 5px;">Max: <span id="refund-modal-max-qty">[Max Qty]</span></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Total Refund Amount:</label>
+                        <div class="info-value" style="font-size: 150%; font-weight: bold; color: var(--primary);">
+                            <span id="refund-total-amount" data-price="">0.00</span> DZD
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="restock-quantity-input">Quantity to Restock:</label>
+                        <input type="number" id="restock-quantity-input" name="restock_qty" value="1" min="0" class="info-value" oninput="QtyCheck()">
+                        <p style="font-size: 100%; margin-top: 5px;">Max Restockable: <span id="restock-modal-max-qty">[Max Restock Qty]</span></p>
+                    </div>
+
+                    <!-- Hidden input for context -->
+                    <input type="hidden" id="modal-product-id">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="secondary-btn" onclick="closeRefundModal()">Cancel</button>
+                    <!-- Changed to type="submit" to trigger the form's onsubmit handler -->
+                    <button type="submit" class="danger-btn">Confirm Refund</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <script src="base.js"></script>
+    <script src="sales.js"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+/* --- Styles for Login/Signup Pages (Auth Layout) --- */
+
+/* Override the main app body layout */
+body.auth-body {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: center; /* Center vertically on the screen */
+    align-items: center; /* Center horizontally */
+    min-height: 100vh; /* Ensure it takes full viewport height */
+    padding: 20px; /* Add some padding */
+}
+
+/* The main container for the form */
+.auth-container {
+    background-color: var(--tab-bg); /* Using a darker color for the form background */
+    color: var(--white);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px var(--semi-transparent);
+    width: 100%;
+    max-width: 400px; /* Limit width for readability */
+    text-align: center;
+}
+
+.auth-container h1 {
+    margin-bottom: 25px;
+    font-size: 200%;
+    color: var(--white);
+    font-weight: 500;
+}
+
+/* Reuse form-group styles from base.css, but ensure input styling works */
+.auth-container .form-group {
+    margin-bottom: 18px;
+    text-align: left; /* Align label/input group to the left */
+}
+
+.auth-container .form-group label {
+    display: block;
+    font-size: 110%;
+    font-weight: 300;
+    color: var(--white); /* Labels should be white on dark background */
+    margin-bottom: 6px;
+}
+
+.auth-container .form-group input {
+    /* Reuse existing input style, but ensure white background is readable */
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--secondary);
+    border-radius: 8px;
+    font-size: 110%;
+    color: var(--tab-bg); /* Dark text on light input */
+    background-color: var(--white);
+    outline: none;
+}
+
+.auth-container .form-group input:focus {
+    border-color: var(--primary);
+}
+
+.auth-container .primary-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    font-size: 120%;
+}
+
+.auth-link {
+    display: block;
+    margin-top: 15px;
+    color: var(--bg); /* Use the light blue as the link color */
+    font-weight: 300;
+}
+
+.auth-link:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
